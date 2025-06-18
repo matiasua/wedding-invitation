@@ -55,8 +55,8 @@ const config = {
     favicon: "/images/favicon.ico",
     agenda: [
       {
-        title: "Akad Nikah",
-        date: "2024-12-24",
+        title: "Ceremonia Civil",
+        date: "2025-10-03T12:00:00+08:00",
         startTime: "16:16",
         endTime: "17:30",
         location: "Grand Ballroom, Hotel Majesty",

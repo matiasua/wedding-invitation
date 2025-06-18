@@ -54,7 +54,7 @@ const CalendarButton = ({ icon: Icon, label, onClick, className = "" }) => (
 );
 
 /**
- * SingleEventCard component displays an event card with options to add the event 
+ * SingleEventCard component displays an event card with options to add the event
  * to various calendars (Google Calendar, Apple Calendar, and Outlook Calendar).
  *
  * @component
@@ -170,7 +170,7 @@ END:VCALENDAR`;
       >
         <div className="space-y-6 ">
           <div className="flex justify-between  items-center">
-            <h3 className="text-xl font-semibold text-gray-800">Add to Calendar</h3>
+            <h3 className="text-xl font-semibold text-gray-800">Añadir al Calendario</h3>
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}

@@ -23,7 +23,7 @@ export default function Hero() {
         }
     }, []);
 
-    const CountdownTimer = ({ targetDate }) => {
+    const CountdownTimer = ({ targetDate = "2025-10-03T12:00:00+08:00" }) => {
         const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
         function calculateTimeLeft() {
             const difference = +new Date(targetDate) - +new Date();
@@ -31,10 +31,10 @@ export default function Hero() {
 
             if (difference > 0) {
                 timeLeft = {
-                    hari: Math.floor(difference / (1000 * 60 * 60 * 24)),
-                    jam: Math.floor((difference / (1000 * 60 * 60)) % 24),
-                    menit: Math.floor((difference / 1000 / 60) % 60),
-                    detik: Math.floor((difference / 1000) % 60),
+                    dias: Math.floor(difference / (1000 * 60 * 60 * 24)),
+                    horas: Math.floor((difference / (1000 * 60 * 60)) % 24),
+                    minutos: Math.floor((difference / 1000 / 60) % 60),
+                    segundos: Math.floor((difference / 1000) % 60),
                 };
             }
             return timeLeft;
@@ -120,7 +120,7 @@ export default function Hero() {
                         className="inline-block mx-auto"
                     >
                         <span className="px-4 py-1 text-sm bg-rose-50 text-rose-600 rounded-full border border-rose-200">
-                            Catat Tanggal Penting Ini
+                            ¡Guarda esta fecha tan especial!
                         </span>
                     </motion.div>
 
@@ -131,7 +131,7 @@ export default function Hero() {
                             transition={{ delay: 0.4 }}
                             className="text-gray-500 font-light italic text-base sm:text-lg"
                         >
-                            InsyaAllah Kami Akan Menikah
+                            Con la bendición de Dios, uniremos nuestras vidas en matrimonio.
                         </motion.p>
                         <motion.h2
                             initial={{ scale: 0.8, opacity: 0 }}
@@ -196,13 +196,13 @@ export default function Hero() {
                                     className="space-y-2"
                                 >
                                     <p className="text-gray-500 font-serif italic text-sm">
-                                        Kepada Yth.
+                                        Estimado(a)
                                     </p>
                                     <p className="text-gray-600 font-medium text-sm">
-                                        Bapak/Ibu/Saudara/i
+                                        Sr./Sra./Hermano/Hermana
                                     </p>
                                     <p className="text-rose-500 font-semibold text-lg">
-                                        {guestName ? guestName : "Tamu"}
+                                        {guestName ? guestName : "Invitado"}
                                     </p>
                                 </motion.div>
                             </div>

@@ -160,7 +160,7 @@ jobs:
               favicon: "/images/favicon.ico",
               agenda: [
                 {
-                  title: "Akad Nikah",
+                  title: "Ceremonia Civil",
                   date: "\${{ env.EVENT_DATE }}",
                   startTime: "\${{ env.AKAD_START }}",
                   endTime: "\${{ env.AKAD_END }}",
