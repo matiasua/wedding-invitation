@@ -11,7 +11,7 @@ const config = {
     date: "2025-10-03T12:00:00+08:00",
     maps_url: "https://goo.gl/maps/abcdef",
     maps_embed:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.0000000000005!2d106.8270733147699!3d-6.175392995514422!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f4f1b6d7b1e7%3A0x2e69f4f1b6d7b1e7!2sMonumen%20Nasional!5e0!3m2!1sid!2sid!4v1633666820004!5m2!1sid!2sid",
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13356.52353248737!2d-70.69824479271036!3d-33.184436888590454!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662bb39c5cd1bc1%3A0xf26c258b4ca976ac!2sC%26S%20Centro%20de%20eventos!5e0!3m2!1ses-419!2scl!4v1750292248153!5m2!1ses-419!2scl",
     time: "19:00 - 03:00 AM",
     location: "Grand Ballroom, Hotel Majesty",
     address: "Jl. Jend. Sudirman No.1, Jakarta",
@@ -19,38 +19,34 @@ const config = {
     favicon: "/images/favicon.ico",
     agenda: [
       {
-        title: "Ceremonia Civil",
+        title: "Ceremonia Matrimonio",
         date: "2025-10-03T12:00:00+08:00",
-        startTime: "11:30",
-        endTime: "13:00",
-        location: " Independencia, Hipódromo Chile N° 1750",
-        address: "Jl. Jend. Sudirman No.1, Jakarta",
-      },
-      {
-        title: "Resepsi Nikah",
-        date: "2024-12-24",
-        startTime: "16:16",
-        endTime: "17:30",
-        location: "Grand Ballroom, Hotel Majesty",
+        startTime: "19:00",
+        endTime: "03:00",
+        location: "Parcela 68F, Reina Norte, Colina",
         address: "Jl. Jend. Sudirman No.1, Jakarta",
       }
     ],
     audio: {
-      src: "/audio/fulfilling-humming.mp3", // or /audio/nature-sound.mp3
+      src: "/audio/audio.mp3", // or /audio/nature-sound.mp3
       title: "Fulfilling Humming", // or Nature Sound
       autoplay: true,
       loop: true
     },
     banks: [
       {
-        bank: "Bank Central Asia",
-        accountNumber: "1234567890",
-        accountName: "FULAN",
+        bank: "Banco Falabella",
+        accountNumber: "19994193840",
+        accountName: "Cuenta Corriente",
+        name: "Matías Cárdenas",
+        rut: "19.409.560-0"
       },
       {
-        bank: "Bank Mandiri",
+        bank: "Banco de Chile",
         accountNumber: "0987654321",
-        accountName: "FULANA",
+        accountName: "Cuenta Vista",
+        name: "Karen Medina",
+        rut: "16.280.015-9"
       }
     ]
   }

@@ -24,29 +24,29 @@ export default function Wishes() {
     const [isOpen, setIsOpen] = useState(false);
 
     const options = [
-        { value: 'ATTENDING', label: 'Ya, saya akan hadir' },
-        { value: 'NOT_ATTENDING', label: 'Tidak, saya tidak bisa hadir' },
-        { value: 'MAYBE', label: 'Mungkin, saya akan konfirmasi nanti' }
+        { value: 'ATTENDING', label: 'Sí, asistiré.' },
+        { value: 'NOT_ATTENDING', label: 'No, no podré asistir.' },
+        { value: 'MAYBE', label: 'Tal vez, confirmaré más adelante.' }
     ];
     // Example wishes - replace with your actual data
     const [wishes, setWishes] = useState([
         {
             id: 1,
-            name: "John Doe",
+            name: "Felipe Meza",
             message: "Wishing you both a lifetime of love, laughter, and happiness! 🎉",
             timestamp: "2024-12-24T23:20:00Z",
             attending: "attending"
         },
         {
             id: 2,
-            name: "Natalie",
+            name: "Negro",
             message: "Wishing you both a lifetime of love, laughter, and happiness! 🎉",
             timestamp: "2024-12-24T23:20:00Z",
             attending: "attending"
         },
         {
             id: 3,
-            name: "Abdur Rofi",
+            name: "Shavi",
             message: "Congratulations on your special day! May Allah bless your union! 🤲",
             timestamp: "2024-12-25T23:08:09Z",
             attending: "maybe"
@@ -104,7 +104,7 @@ export default function Wishes() {
                         transition={{ delay: 0.2 }}
                         className="inline-block text-rose-500 font-medium"
                     >
-                        Kirimkan Doa dan Harapan Terbaik Anda
+                        Comparte con nosotros tus oraciones y mejores deseos.
                     </motion.span>
 
                     <motion.h2
@@ -113,7 +113,7 @@ export default function Wishes() {
                         transition={{ delay: 0.3 }}
                         className="text-4xl md:text-5xl font-serif text-gray-800"
                     >
-                        Pesan dan Doa
+                        Mensajes y Oraciones
                     </motion.h2>
 
                     {/* Decorative Divider */}
@@ -208,11 +208,11 @@ export default function Wishes() {
                                 <div className="space-y-2">
                                     <div className="flex items-center space-x-2 text-gray-500 text-sm mb-1">
                                         <User className="w-4 h-4" />
-                                        <span>Nama Kamu</span>
+                                        <span>Tu Nombre</span>
                                     </div>
                                     <input
                                         type="text"
-                                        placeholder="Masukan nama kamu..."
+                                        placeholder="Tu Nombre..."
                                         className="w-full px-4 py-2.5 rounded-xl bg-white/50 border border-rose-100 focus:border-rose-300 focus:ring focus:ring-rose-200 focus:ring-opacity-50 transition-all duration-200 text-gray-700 placeholder-gray-400"
                                         required
                                     />
@@ -225,7 +225,7 @@ export default function Wishes() {
                                 >
                                     <div className="flex items-center space-x-2 text-gray-500 text-sm mb-1">
                                         <Calendar className="w-4 h-4" />
-                                        <span>Apakah kamu hadir?</span>
+                                        <span>¿Asistirás?</span>
                                     </div>
 
                                     {/* Custom Select Button */}
@@ -237,7 +237,7 @@ export default function Wishes() {
                                         <span className={attendance ? 'text-gray-700' : 'text-gray-400'}>
                                             {attendance ?
                                                 options.find(opt => opt.value === attendance)?.label
-                                                : 'Pilih kehadiran...'}
+                                                : 'Selecciona tu asistencia...'}
                                         </span>
                                         <ChevronDown
                                             className={`w-5 h-5 text-gray-400 transition-transform duration-200 ${isOpen ? 'transform rotate-180' : ''
@@ -280,10 +280,10 @@ export default function Wishes() {
                                 <div className="space-y-2">
                                     <div className="flex items-center space-x-2 text-gray-500 text-sm mb-1">
                                         <MessageCircle className="w-4 h-4" />
-                                        <span>Harapan kamu</span>
+                                        <span>Tus deseos</span>
                                     </div>
                                     <textarea
-                                        placeholder="Kirimkan harapan dan doa untuk kedua mempelai..."
+                                        placeholder="✨ Envía tus deseos y oraciones para los novios..."
                                         className="w-full h-32 p-4 rounded-xl bg-white/50 border border-rose-100 focus:border-rose-300 focus:ring focus:ring-rose-200 focus:ring-opacity-50 resize-none transition-all duration-200"
                                         required
                                     />
@@ -292,7 +292,7 @@ export default function Wishes() {
                             <div className="flex items-center justify-between mt-4">
                                 <div className="flex items-center space-x-2 text-gray-500">
                                     <Smile className="w-5 h-5" />
-                                    <span className="text-sm">Berikan Doa Anda</span>
+                                    <span className="text-sm">Envía tu oración</span>
                                 </div>
                                 <motion.button
                                     whileHover={{ scale: 1.02 }}
@@ -303,7 +303,7 @@ export default function Wishes() {
                                             : 'bg-rose-500 hover:bg-rose-600'}`}
                                 >
                                     <Send className="w-4 h-4" />
-                                    <span>{isSubmitting ? 'Sedang Mengirim...' : 'Kirimkan Doa'}</span>
+                                    <span>{isSubmitting ? 'Enviando...' : 'Compartir mensaje'}</span>
                                 </motion.button>
                             </div>
                         </div>

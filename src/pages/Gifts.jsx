@@ -40,7 +40,7 @@ export default function Gifts() {
                         transition={{ delay: 0.2 }}
                         className="inline-block text-rose-500 font-medium"
                     >
-                        Hadiah Pernikahan
+                        🎁 Regalos de Boda
                     </motion.span>
 
                     <motion.h2
@@ -49,7 +49,7 @@ export default function Gifts() {
                         transition={{ delay: 0.3 }}
                         className="text-4xl md:text-5xl font-serif text-gray-800"
                     >
-                        Berikan Hadiah
+                        Haz un regalo
                     </motion.h2>
 
                     {/* Decorative Divider */}
@@ -73,21 +73,21 @@ export default function Gifts() {
                     >
                         {/* Arabic InsyaAllah */}
                         <p className="font-arabic text-xl text-gray-800">
-                            إن شاء الله
+                            Si Dios quiere
                         </p>
 
                         {/* Main Message */}
                         <p className="text-gray-600 leading-relaxed">
-                            Insya Allah, Kami Akan Menyalurkan Semua Hadiah yang Diberikan ke Beberapa Masjid dan Lembaga yang Membutuhkan
+                            Tu presencia es lo más importante para nosotros. Pero si deseas colaborar con un regalo, estaremos encantados de recibir tu aporte mediante transferencia para ayudarnos a cumplir nuestro sueño de luna de miel.
                         </p>
 
                         {/* Arabic Dua */}
                         <div className="space-y-2">
                             <p className="font-arabic text-lg text-gray-800">
-                                جزاكم الله خيرا وبارك الله فيكم
+                                Que Dios les recompense con el bien y los bendiga.
                             </p>
                             <p className="text-gray-600 italic text-sm">
-                                Jazakumullahu khairan, Barakallah fiikum
+                                Cada gesto cuenta, y lo valoramos de todo corazón.
                             </p>
                         </div>
                     </motion.div>
@@ -125,6 +125,8 @@ export default function Gifts() {
                                         <div>
                                             <h3 className="font-medium text-gray-800">{account.bank}</h3>
                                             <p className="text-sm text-gray-500">{account.accountName}</p>
+                                            <p className="text-sm text-gray-600">Nombre: {account.name}</p>
+                                            <p className="text-sm text-gray-600">RUT: {account.rut}</p>
                                         </div>
                                     </div>
                                     <Wallet className="w-5 h-5 text-rose-400" />

@@ -23,7 +23,7 @@ export default function Location() {
                         viewport={{ once: true }}
                         className="inline-block text-rose-500 font-medium"
                     >
-                        Lokasi Acara
+                        Ubicación del Evento
                     </motion.span>
 
                     <motion.h2
@@ -33,7 +33,7 @@ export default function Location() {
                         viewport={{ once: true }}
                         className="text-4xl md:text-5xl font-serif text-gray-800"
                     >
-                        Lokasi
+                        Nos vemos aquí
                     </motion.h2>
 
                     {/* Decorative Divider */}
@@ -80,42 +80,6 @@ export default function Location() {
                         viewport={{ once: true }}
                         className="space-y-6"
                     >
-                        <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-                            <h3 className="text-2xl font-serif text-gray-800 mb-6">{config.data.location}</h3>
-
-                            <div className="space-y-4">
-                                <div className="flex items-start space-x-4">
-                                    <MapPin className="w-5 h-5 text-rose-500 mt-1" />
-                                    <p className="text-gray-600 flex-1">{config.data.address}</p>
-                                </div>
-
-                                <div className="flex items-center space-x-4">
-                                    <CalendarCheck className="w-5 h-5 text-rose-500" />
-                                    <p className="text-gray-600">{formatEventDate(config.data.date)}</p>
-                                </div>
-
-                                <div className="flex items-center space-x-4">
-                                    <Clock className="w-5 h-5 text-rose-500" />
-                                    <p className="text-gray-600">{config.data.time}</p>
-                                </div>
-
-                                {/* Action Button - Full Width */}
-                                <div className="pt-4">
-                                    <motion.a
-                                        href={config.data.maps_url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        whileHover={{ scale: 1.02 }}
-                                        whileTap={{ scale: 0.98 }}
-                                        viewport={{ once: true }}
-                                        className="w-full flex items-center justify-center gap-1.5 bg-white text-gray-600 px-4 py-2 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors text-sm"
-                                    >
-                                        <ExternalLink className="w-3.5 h-3.5" />
-                                        <span className="font-semibold">View Map</span>
-                                    </motion.a>
-                                </div>
-                            </div>
-                        </div>
                     </motion.div>
                 </div>
             </div>
