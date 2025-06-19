@@ -7,13 +7,13 @@ export default function Events() {
     return (
         <>
             {/* Event Section */}
-            <section id="event" className="min-h-screen relative overflow-hidden">
+            <section id="event" className="relative overflow-hidden pt-16 pb-8">
                 <motion.div
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
-                    className="relative z-10 container mx-auto px-4 py-20"
+                    className="relative z-10 container mx-auto px-4"
                 >
                     {/* Section Header */}
                     <motion.div
@@ -42,7 +42,6 @@ export default function Events() {
                         >
                             Cronograma del Matrimonio
                         </motion.h2>
-
                         <motion.p
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
@@ -52,7 +51,6 @@ export default function Events() {
                         >
                             Te invitamos a celebrar un día muy especial, el comienzo de nuestro viaje juntos en el amor.
                         </motion.p>
-
                         {/* Decorative Line */}
                         <motion.div
                             initial={{ scale: 0 }}
@@ -75,7 +73,7 @@ export default function Events() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8, delay: 0.6 }}
-                        className="max-w-2xl mx-auto"
+                        className="max-w-2x1 mx-auto"
                     >
                         <EventCards events={config.data.agenda} />
                     </motion.div>

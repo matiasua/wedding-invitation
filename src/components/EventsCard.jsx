@@ -87,14 +87,38 @@ const SingleEventCard = ({ eventData }) => {
   const [showCalendarModal, setShowCalendarModal] = useState(false);
 
   const googleCalendarLink = () => {
-    const startDate = new Date(`${eventData.date}T${eventData.startTime}:00`);
-    const endDate = new Date(`${eventData.date}T${eventData.endTime}:00`);
+    const pad = (n) => String(n).padStart(2, '0');
 
-    const formatDate = (date) => {
-      return date.toISOString().replace(/-|:|\.\d+/g, '');
+    const formatDateTime = (dateStr, timeStr) => {
+      const [year, month, day] = dateStr.split('-');
+      const [hour, minute] = timeStr.split(':');
+      return `${year}${pad(month)}${pad(day)}T${pad(hour)}${pad(minute)}00`;
     };
 
-    return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventData.title)}&dates=${formatDate(startDate)}/${formatDate(endDate)}&details=${encodeURIComponent(eventData.description)}&location=${encodeURIComponent(eventData.location)}&ctz=${eventData.timeZone}`;
+    const startDate = eventData.date; // Ej: 20251003T160000
+    let endDate = eventData.date;    // Ej: 20251003T183000
+
+    const [startHour] = eventData.startTime.split(':').map(Number);
+    const [endHour] = eventData.endTime.split(':').map(Number);
+
+    // si termina pasada medianoche (ej: 03:00), sumar un día
+    if (endHour < startHour) {
+      const d = new Date(`${eventData.date}T00:00:00`);
+      d.setDate(d.getDate() + 1);
+      endDate = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+    }
+
+    const start = formatDateTime(startDate, eventData.startTime);
+    const end = formatDateTime(endDate, eventData.endTime);
+
+    const title = encodeURIComponent("Ceremonia de Matrimonio Karen & Matias");
+    const description = encodeURIComponent(
+      eventData.description || "Acompáñanos a celebrar este día tan especial 💍"
+    );
+    const location = encodeURIComponent(eventData.location || "Parcela 68F, Reina Norte, Colina");
+    const timeZone = encodeURIComponent(eventData.timeZone || "America/Santiago");
+
+    return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${start}/${end}&details=${description}&location=${location}&ctz=${timeZone}`;
   };
 
   const generateICSContent = () => {
@@ -132,7 +156,7 @@ END:VCALENDAR`;
   return (
     <div className="relative">
       <motion.div
-        className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 space-y-4"
+        className="bg-white rounded-2x1 p-6 shadow-sm border border-gray-100 space-y-4"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}

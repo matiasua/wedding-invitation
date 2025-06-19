@@ -13,8 +13,27 @@ import {
     XCircle,
     HelpCircle,
 } from 'lucide-react'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { formatEventDate } from '@/lib/formatEventDate';
+
+const INITIAL_NOVIOS = [
+    {
+        id: 1,
+        name: "Matías Cárdenas",
+        message:
+            "Gracias por acompañarnos en este momento tan especial. Sus palabras, oraciones y cariño significan mucho para nosotros. 🎉",
+        timestamp: "2025-06-19T23:20:00Z",
+        attendance: "asistiré",
+    },
+    {
+        id: 2,
+        name: "Karen Medina",
+        message:
+            "Cada mensaje que nos dejen será un recuerdo que atesoraremos para siempre. Gracias por formar parte de esta historia que estamos comenzando con tanto amor y emoción.",
+        timestamp: "2024-12-24T23:20:00Z",
+        attendance: "asistiré",
+    },
+];
 
 export default function Wishes() {
     const [showConfetti, setShowConfetti] = useState(false);
@@ -22,72 +41,106 @@ export default function Wishes() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [attendance, setAttendance] = useState('');
     const [isOpen, setIsOpen] = useState(false);
+    const [name, setName] = useState('');
 
     const options = [
-        { value: 'ATTENDING', label: 'Sí, asistiré.' },
-        { value: 'NOT_ATTENDING', label: 'No, no podré asistir.' },
-        { value: 'MAYBE', label: 'Tal vez, confirmaré más adelante.' }
+        { value: 'asistiré', label: 'Sí, asistiré.' },
+        { value: 'no asistiré', label: 'No, no podré asistir.' },
+        { value: 'Tal vez', label: 'Tal vez, confirmaré más adelante.' }
     ];
-    // Example wishes - replace with your actual data
+
+
     const [wishes, setWishes] = useState([
         {
             id: 1,
-            name: "Felipe Meza",
-            message: "Wishing you both a lifetime of love, laughter, and happiness! 🎉",
-            timestamp: "2024-12-24T23:20:00Z",
-            attending: "attending"
+            name: "Matías Cárdenas",
+            message:
+                "Gracias por acompañarnos en este momento tan especial. Sus palabras, oraciones y cariño significan mucho para nosotros. 🎉",
+            timestamp: "2025-06-19T23:20:00Z",
+            attendance: "asistiré",
         },
         {
             id: 2,
-            name: "Negro",
-            message: "Wishing you both a lifetime of love, laughter, and happiness! 🎉",
+            name: "Karen Medina",
+            message:
+                "Cada mensaje que nos dejen será un recuerdo que atesoraremos para siempre. Gracias por formar parte de esta historia que estamos comenzando con tanto amor y emoción.",
             timestamp: "2024-12-24T23:20:00Z",
-            attending: "attending"
+            attendance: "asistiré",
         },
-        {
-            id: 3,
-            name: "Shavi",
-            message: "Congratulations on your special day! May Allah bless your union! 🤲",
-            timestamp: "2024-12-25T23:08:09Z",
-            attending: "maybe"
-        }
     ]);
 
-    const handleSubmitWish = async (e) => {
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwlUsYzvVQf8LgiPoKtR4w19pqKcQNav4F4ypr4FXQJB9I3N0Y4k7fBwkzW8r_H7ECjXg/exec";
+
+    // 1) Al montar, traemos del sheet y guardamos:
+    useEffect(() => {
+        fetch(SCRIPT_URL)
+            .then(res => res.json())
+            .then(sheetWishes => {
+                setWishes([...INITIAL_NOVIOS, ...sheetWishes]);
+            })
+            .catch(err => console.error("No pude cargar los deseos:", err));
+    }, []);
+
+    const handleSubmitWish = (e) => {
         e.preventDefault();
-        if (!newWish.trim()) return;
+        if (!newWish.trim() || !name || !attendance) return;
 
         setIsSubmitting(true);
-        // Simulating API call
-        await new Promise(resolve => setTimeout(resolve, 1000));
 
-        const newWishObj = {
-            id: wishes.length + 1,
-            name: "Guest", // Replace with actual user name
-            message: newWish,
-            attend: "attending",
-            timestamp: new Date().toISOString()
-        };
+        // 1) Creamos dinámicamente un <form>
+        const form = document.createElement('form');
+        form.style.display = 'none';
+        form.method = 'POST';
+        form.action = SCRIPT_URL;
+        form.target = 'hidden_iframe';
 
-        setWishes(prev => [newWishObj, ...prev]);
+        // construimos todos los campos
+        ;['name', 'attendance', 'message'].forEach(key => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = key;
+            // valor según la key
+            if (key === 'name') input.value = name;
+            if (key === 'attendance') input.value = attendance;
+            if (key === 'message') input.value = newWish;
+            form.appendChild(input);
+        });
+
+        document.body.appendChild(form);
+        form.submit();                          // 3) Enviamos
+        document.body.removeChild(form);
+
+        // mantenemos tu lógica de estado local
+        setWishes(prev => [
+            { id: prev.length + 1, name, attendance, message: newWish, timestamp: new Date().toISOString() },
+            ...prev
+        ]);
+        setName('');
+        setAttendance('');
         setNewWish('');
-        setIsSubmitting(false);
+        setIsOpen(false);
         setShowConfetti(true);
         setTimeout(() => setShowConfetti(false), 3000);
+        setIsSubmitting(false);
     };
+
     const getAttendanceIcon = (status) => {
         switch (status) {
-            case 'attending':
+            case 'asistiré':
                 return <CheckCircle className="w-4 h-4 text-emerald-500" />;
-            case 'not-attending':
+            case 'no asistiré':
                 return <XCircle className="w-4 h-4 text-rose-500" />;
-            case 'maybe':
+            case 'Tal vez':
                 return <HelpCircle className="w-4 h-4 text-amber-500" />;
             default:
                 return null;
         }
     };
     return (<>
+        <iframe
+            name="hidden_iframe"
+            style={{ display: 'none' }}
+        />
         <section id="wishes" className="min-h-screen relative overflow-hidden">
             {showConfetti && <Confetti recycle={false} numberOfPieces={200} />}
             <div className="container mx-auto px-4 py-20 relative z-10">
@@ -164,7 +217,7 @@ export default function Wishes() {
                                                     <h4 className="font-medium text-gray-800 text-sm truncate">
                                                         {wish.name}
                                                     </h4>
-                                                    {getAttendanceIcon(wish.attending)}
+                                                    {getAttendanceIcon(wish.attendance)}
                                                 </div>
                                                 <div className="flex items-center space-x-1 text-gray-500 text-xs">
                                                     <Clock className="w-3 h-3" />
@@ -212,8 +265,10 @@ export default function Wishes() {
                                     </div>
                                     <input
                                         type="text"
+                                        value={name}
                                         placeholder="Tu Nombre..."
                                         className="w-full px-4 py-2.5 rounded-xl bg-white/50 border border-rose-100 focus:border-rose-300 focus:ring focus:ring-rose-200 focus:ring-opacity-50 transition-all duration-200 text-gray-700 placeholder-gray-400"
+                                        onChange={(e) => setName(e.target.value)}
                                         required
                                     />
                                 </div>
@@ -285,6 +340,8 @@ export default function Wishes() {
                                     <textarea
                                         placeholder="✨ Envía tus deseos y oraciones para los novios..."
                                         className="w-full h-32 p-4 rounded-xl bg-white/50 border border-rose-100 focus:border-rose-300 focus:ring focus:ring-rose-200 focus:ring-opacity-50 resize-none transition-all duration-200"
+                                        value={newWish}
+                                        onChange={(e) => setNewWish(e.target.value)}
                                         required
                                     />
                                 </div>
@@ -292,13 +349,15 @@ export default function Wishes() {
                             <div className="flex items-center justify-between mt-4">
                                 <div className="flex items-center space-x-2 text-gray-500">
                                     <Smile className="w-5 h-5" />
-                                    <span className="text-sm">Envía tu oración</span>
+                                    <span className="text-sm">Envía tu deseo</span>
                                 </div>
                                 <motion.button
+                                    type="submit"
+                                    disabled={isSubmitting}
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                     className={`flex items-center space-x-2 px-6 py-2.5 rounded-xl text-white font-medium transition-all duration-200
-                    ${isSubmitting
+                                        ${isSubmitting
                                             ? 'bg-gray-300 cursor-not-allowed'
                                             : 'bg-rose-500 hover:bg-rose-600'}`}
                                 >

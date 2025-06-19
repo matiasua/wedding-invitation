@@ -12,21 +12,30 @@ import { useState, useEffect } from 'react';
 export default function Gifts() {
     const [copiedAccount, setCopiedAccount] = useState(null);
     const [hasAnimated, setHasAnimated] = useState(false);
-    
+
     // Set animation to run once on component mount
     useEffect(() => {
         setHasAnimated(true);
     }, []);
-    
-    const copyToClipboard = (text, bank) => {
+
+    const copyToClipboard = (account) => {
+        const cleanRut = account.rut.replace(/[.-]/g, '');
+
+        const text = `${account.name}
+      ${cleanRut}
+      ${account.bank}
+      ${account.accountName}
+      ${account.accountNumber}
+      ${account.email}`;
+
         navigator.clipboard.writeText(text);
-        setCopiedAccount(bank);
+        setCopiedAccount(account.bank);
         setTimeout(() => setCopiedAccount(null), 2000);
     };
-    
+
     return (<>
-        <section id="gifts" className="min-h-screen relative overflow-hidden">
-            <div className="container mx-auto px-4 py-20 relative z-10">
+        <section id="gifts" className="relative overflow-hidden">
+            <div className="container mx-auto px-4 pt-8 pb-20 relative z-10">
                 {/* Section Header */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -138,7 +147,7 @@ export default function Gifts() {
                                         <motion.button
                                             whileHover={{ scale: 1.05 }}
                                             whileTap={{ scale: 0.95 }}
-                                            onClick={() => copyToClipboard(account.accountNumber, account.bank)}
+                                            onClick={() => copyToClipboard(account)}
                                             className="flex items-center space-x-1 text-rose-500 hover:text-rose-600"
                                         >
                                             {copiedAccount === account.bank ? (
