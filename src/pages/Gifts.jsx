@@ -19,19 +19,25 @@ export default function Gifts() {
     }, []);
 
     const copyToClipboard = (account) => {
-        const cleanRut = account.rut.replace(/[.-]/g, '');
-
-        const text = `${account.name}
-      ${cleanRut}
-      ${account.bank}
-      ${account.accountName}
-      ${account.accountNumber}
-      ${account.email}`;
-
+        // si quieres el bloque completo, sin indentación:
+        const cleanRut = account.rut.replace(/[.\-]/g, '');
+        const lines = [
+            account.name,
+            cleanRut,
+            account.bank,
+            account.accountName,
+            account.accountNumber,
+            account.email,
+        ];
+        const text = lines.join('\n');
         navigator.clipboard.writeText(text);
+
+        // o bien, para pegar sólo el número de cuenta:
+        // navigator.clipboard.writeText(account.accountNumber);
+
         setCopiedAccount(account.bank);
         setTimeout(() => setCopiedAccount(null), 2000);
-    };
+      };
 
     return (<>
         <section id="gifts" className="relative overflow-hidden">
