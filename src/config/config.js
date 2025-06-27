@@ -10,7 +10,7 @@ const config = {
     brideName: "Matías",
     parentGroom: "Bapak Groom & Ibu Groom",
     parentBride: "Bapak Bride & Ibu Bride",
-    date: "2025-10-03T12:00:00+08:00",
+    date: "2025-11-01T12:00:00+08:00",
     maps_url: "https://goo.gl/maps/abcdef",
     maps_embed:
       "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13356.52353248737!2d-70.69824479271036!3d-33.184436888590454!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662bb39c5cd1bc1%3A0xf26c258b4ca976ac!2sC%26S%20Centro%20de%20eventos!5e0!3m2!1ses-419!2scl!4v1750292248153!5m2!1ses-419!2scl",

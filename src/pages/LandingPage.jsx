@@ -12,7 +12,7 @@ const LandingPage = ({ onOpenInvitation }) => (
     className="min-h-screen relative overflow-hidden"
   >
     {/* Decorative Background */}
-    <div className="absolute inset-0 bg-gradient-to-b from-white via-rose-50/30 to-white" />
+    <div className="absolute inset-0 bg-gradient-to-b from-rose-50 via-rose-100/30 to-rose-50" />
     <div className="absolute top-0 right-0 w-64 h-64 md:w-96 md:h-96 bg-rose-100/20 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
     <div className="absolute bottom-0 left-0 w-64 h-64 md:w-96 md:h-96 bg-pink-100/20 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2" />
 

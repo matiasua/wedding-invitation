@@ -1,18 +1,18 @@
+// src/components/MainContent.jsx
 import Hero from '@/pages/Hero'
 import Events from '@/pages/Events'
-import Location from '@/pages/Location';
-import Wishes from '@/pages/Wishes';
-import Gifts from '@/pages/Gifts';
+import Location from '@/pages/Location'
+import Gifts from '@/pages/Gifts'
+import Wishes from '@/pages/Wishes'
 
-// Main Invitation Content
 export default function MainContent() {
-    return (
-        <>
-            <Hero />
-            <Events />
-            <Location />
-            <Gifts />
-            <Wishes />
-        </>
-    )
+  return (
+    <div className="bg-background min-h-screen">
+      <Hero />
+      <Events />
+      <Location />
+      <Gifts />
+      <Wishes />
+    </div>
+  )
 }
