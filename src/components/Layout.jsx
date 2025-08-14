@@ -10,13 +10,11 @@ const Layout = ({ children }) => {
   const audioRef = useRef(null);
   const wasPlayingRef = useRef(false);
 
-  // First useEffect to handle initial setup and auto-play attempt
+  // Setup + intento de autoplay
   useEffect(() => {
-    // Create audio element
     audioRef.current = new Audio(config.data.audio.src);
     audioRef.current.loop = config.data.audio.loop;
 
-    // Try to autoplay
     const attemptAutoplay = async () => {
       try {
         await audioRef.current.play();
@@ -24,9 +22,7 @@ const Layout = ({ children }) => {
         wasPlayingRef.current = true;
         setShowToast(true);
         setTimeout(() => setShowToast(false), 3000);
-      } catch (error) {
-        console.log('Autoplay failed, waiting for user interaction');
-        // Add click event listener for first interaction
+      } catch {
         const handleFirstInteraction = async () => {
           try {
             await audioRef.current.play();
@@ -34,12 +30,12 @@ const Layout = ({ children }) => {
             wasPlayingRef.current = true;
             setShowToast(true);
             setTimeout(() => setShowToast(false), 3000);
-            document.removeEventListener('click', handleFirstInteraction);
+            document.removeEventListener("click", handleFirstInteraction);
           } catch (err) {
-            console.error('Playback failed after interaction:', err);
+            console.error("Playback failed after interaction:", err);
           }
         };
-        document.addEventListener('click', handleFirstInteraction);
+        document.addEventListener("click", handleFirstInteraction);
       }
     };
 
@@ -53,7 +49,7 @@ const Layout = ({ children }) => {
     };
   }, []);
 
-  // Second useEffect to handle visibility and focus changes
+  // Manejo visibilidad/foco + listeners de audio
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.hidden) {
@@ -62,11 +58,9 @@ const Layout = ({ children }) => {
           audioRef.current.pause();
           setIsPlaying(false);
         }
-      } else {
-        if (audioRef.current && wasPlayingRef.current) {
-          audioRef.current.play().catch(console.error);
-          setIsPlaying(true);
-        }
+      } else if (audioRef.current && wasPlayingRef.current) {
+        audioRef.current.play().catch(console.error);
+        setIsPlaying(true);
       }
     };
 
@@ -85,7 +79,6 @@ const Layout = ({ children }) => {
       }
     };
 
-    // Audio event listeners
     const handlePlay = () => {
       setIsPlaying(true);
       setShowToast(true);
@@ -99,44 +92,42 @@ const Layout = ({ children }) => {
     };
 
     if (audioRef.current) {
-      audioRef.current.addEventListener('play', handlePlay);
-      audioRef.current.addEventListener('pause', handlePause);
+      audioRef.current.addEventListener("play", handlePlay);
+      audioRef.current.addEventListener("pause", handlePause);
     }
 
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    window.addEventListener('blur', handleWindowBlur);
-    window.addEventListener('focus', handleWindowFocus);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("blur", handleWindowBlur);
+    window.addEventListener("focus", handleWindowFocus);
 
     return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      window.removeEventListener('blur', handleWindowBlur);
-      window.removeEventListener('focus', handleWindowFocus);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("blur", handleWindowBlur);
+      window.removeEventListener("focus", handleWindowFocus);
 
       if (audioRef.current) {
-        audioRef.current.removeEventListener('play', handlePlay);
-        audioRef.current.removeEventListener('pause', handlePause);
+        audioRef.current.removeEventListener("play", handlePlay);
+        audioRef.current.removeEventListener("pause", handlePause);
       }
     };
   }, [isPlaying]);
 
-  // Toggle music function
   const toggleMusic = async () => {
-    if (audioRef.current) {
-      try {
-        if (isPlaying) {
-          audioRef.current.pause();
-          wasPlayingRef.current = false;
-        } else {
-          await audioRef.current.play();
-          wasPlayingRef.current = true;
-        }
-      } catch (error) {
-        console.error('Playback error:', error);
+    if (!audioRef.current) return;
+    try {
+      if (isPlaying) {
+        audioRef.current.pause();
+        wasPlayingRef.current = false;
+      } else {
+        await audioRef.current.play();
+        wasPlayingRef.current = true;
       }
+    } catch (error) {
+      console.error("Playback error:", error);
     }
   };
 
-  // Handle page unload
+  // Pausar al cerrar pestaña
   useEffect(() => {
     const handleBeforeUnload = () => {
       if (audioRef.current) {
@@ -144,20 +135,20 @@ const Layout = ({ children }) => {
         setIsPlaying(false);
       }
     };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, []);
 
   return (
     <div className="relative min-h-screen w-full bg-gradient-to-br from-rose-50 to-pink-50 flex items-center justify-center">
+      {/* CONTENEDOR “TELÉFONO” — scroll propio */}
       <motion.div
-        className="mx-auto w-full max-w-[430px] min-h-screen bg-rose-50/80 backdrop-blur-sm relative overflow-hidden border border-rose-100 shadow-lg"
+        className="mx-auto w-full max-w-[430px] h-screen overflow-y-auto bg-rose-50/80 backdrop-blur-sm relative border border-rose-100 shadow-lg"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        {/* Music Control Button with Status Indicator */}
+        {/* Botón música (fixed al viewport; cámbialo a sticky si lo quieres dentro del contenedor) */}
         <motion.button
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
@@ -176,11 +167,15 @@ const Layout = ({ children }) => {
           )}
         </motion.button>
 
-        <main className="relative h-full w-full pb-[100px]">
+        {/* Contenido — deja espacio para la BottomBar */}
+        <main className="relative w-full pb-[96px]">
           {children}
         </main>
+
+        {/* Barra inferior sticky (se mantiene abajo dentro del “teléfono”) */}
         <BottomBar />
-        {/* Music Info Toast */}
+
+        {/* Toast de música (opcional) */}
         <AnimatePresence>
           {showToast && (
             <motion.div
@@ -188,9 +183,9 @@ const Layout = ({ children }) => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
               transition={{ duration: 0.3 }}
-              className="fixed bottom-24 left-1/2 transform -translate-x-1/2 z-50"
+              className="sticky bottom-24 z-50 flex justify-center"
             >
-              <div className="bg-black/80 text-white transform -translate-x-1/2 px-4 py-2 rounded-full backdrop-blur-sm flex items-center space-x-2">
+              <div className="bg-black/80 text-white px-4 py-2 rounded-full backdrop-blur-sm flex items-center gap-2">
                 <Music className="w-4 h-4 animate-pulse" />
                 <span className="text-sm whitespace-nowrap">
                   {config.data.audio.title}

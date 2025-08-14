@@ -1,50 +1,36 @@
-// src/components/bottom-bar/BottomBar.jsx
-import React from 'react';
-import { motion } from 'framer-motion';
+import React from "react";
+import { motion } from "framer-motion";
 import {
   Home,
   CalendarHeart,
   MapPin,
   Gift,
-  MessageCircleHeart
-} from 'lucide-react';
+  MessageCircleHeart,
+} from "lucide-react";
+// Usa el import que tengas configurado. Si NO tienes alias "@", cambia por ruta relativa:
+// import { cn } from "../lib/utils";
 import { cn } from "@/lib/utils";
 
 const menuItems = [
-  { icon: Home, label: 'Inicio', href: '#home' },
-  { icon: CalendarHeart, label: 'Evento', href: '#event' },
-  { icon: MapPin, label: 'Ubicación', href: '#location' },
-  { icon: Gift, label: 'Regalo', href: '#gifts' },
-  { icon: MessageCircleHeart, label: 'Deseos', href: '#wishes' },
+  { icon: Home, label: "Inicio", href: "#home" },
+  { icon: CalendarHeart, label: "Evento", href: "#event" },
+  { icon: MapPin, label: "Ubicación", href: "#location" },
+  { icon: Gift, label: "Regalo", href: "#gifts" },
+  { icon: MessageCircleHeart, label: "Deseos", href: "#wishes" },
 ];
 
-/**
- * BottomBar is a React functional component that renders a fixed bottom navigation bar.
- *
- * This component uses Framer Motion to animate its entrance, providing smooth transitions
- * for opacity and vertical movement. It displays a navigational menu with items that change
- * appearance based on the active state. The component maps through a list of menu items, each
- * containing an icon and a label, and applies interactive animations such as hover and tap
- * effects. The active menu item is highlighted by updating text color and background styles.
- *
- * @component
- * @example
- * // Basic usage:
- * <BottomBar />
- *
- * @returns {JSX.Element} A JSX element containing the animated bottom navigation bar.
- */
 const BottomBar = () => {
-  const [active, setActive] = React.useState('home');
+  const [active, setActive] = React.useState("home");
 
   return (
-    <motion.div
-      className="fixed bottom-4 transform -translate-x-1/2 z-50 w-full px-4 max-w-[430px]"
-      initial={{ y: 100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
-    >
-      <div className="backdrop-blur-md bg-white/90 border border-gray-200/80 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.07)] px-4 py-2">
+    // Sticky dentro del contenedor que scrollea (tu “teléfono”)
+    <div className="sticky bottom-4 z-50 px-4">
+      <motion.div
+        initial={{ y: 40, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.35, type: "spring", stiffness: 160 }}
+        className="backdrop-blur-md bg-white/90 border border-gray-200/80 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.07)] px-4 py-2"
+      >
         <nav className="flex justify-between items-center">
           {menuItems.map((item) => (
             <motion.a
@@ -69,19 +55,21 @@ const BottomBar = () => {
                     : "stroke-gray-600"
                 )}
               />
-              <span className={cn(
-                "text-[10px] sm:text-xs font-medium transition-all duration-200 line-clamp-1",
-                active === item.label.toLowerCase()
-                  ? "scale-105 text-rose-500"
-                  : "scale-100"
-              )}>
+              <span
+                className={cn(
+                  "text-[10px] sm:text-xs font-medium transition-all duration-200 line-clamp-1",
+                  active === item.label.toLowerCase()
+                    ? "scale-105 text-rose-500"
+                    : "scale-100"
+                )}
+              >
                 {item.label}
               </span>
             </motion.a>
           ))}
         </nav>
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 };
 
