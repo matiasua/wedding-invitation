@@ -49,7 +49,7 @@ const Layout = ({ children }) => {
     };
   }, []);
 
-  // Manejo visibilidad/foco + listeners de audio
+  // Visibilidad/foco + listeners de audio
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.hidden) {
@@ -140,15 +140,15 @@ const Layout = ({ children }) => {
   }, []);
 
   return (
-    <div className="relative min-h-screen w-full bg-gradient-to-br from-rose-50 to-pink-50 flex items-center justify-center">
+    <div className="relative min-h-[100dvh] w-full bg-gradient-to-br from-rose-50 to-pink-50 flex items-center justify-center">
       {/* CONTENEDOR “TELÉFONO” — scroll propio */}
       <motion.div
-        className="mx-auto w-full max-w-[430px] h-screen overflow-y-auto bg-rose-50/80 backdrop-blur-sm relative border border-rose-100 shadow-lg"
+        className="mx-auto w-full max-w-[430px] h-[100dvh] overflow-y-auto bg-rose-50/80 backdrop-blur-sm relative border border-rose-100 shadow-lg"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        {/* Botón música (fixed al viewport; cámbialo a sticky si lo quieres dentro del contenedor) */}
+        {/* Botón música (fixed al viewport); si lo quieres dentro, cámbialo a sticky */}
         <motion.button
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
@@ -167,12 +167,15 @@ const Layout = ({ children }) => {
           )}
         </motion.button>
 
-        {/* Contenido — deja espacio para la BottomBar */}
-        <main className="relative w-full pb-[96px]">
+        {/* Contenido — padding dinámico para que no lo tape la BottomBar */}
+        <main
+          className="relative w-full"
+          style={{ paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 110px)" }}
+        >
           {children}
         </main>
 
-        {/* Barra inferior sticky (se mantiene abajo dentro del “teléfono”) */}
+        {/* Barra inferior sticky (se mantiene abajo y sobre la barra del browser) */}
         <BottomBar />
 
         {/* Toast de música (opcional) */}
@@ -183,7 +186,8 @@ const Layout = ({ children }) => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
               transition={{ duration: 0.3 }}
-              className="sticky bottom-24 z-50 flex justify-center"
+              className="sticky z-50 flex justify-center"
+              style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 96px)" }}
             >
               <div className="bg-black/80 text-white px-4 py-2 rounded-full backdrop-blur-sm flex items-center gap-2">
                 <Music className="w-4 h-4 animate-pulse" />

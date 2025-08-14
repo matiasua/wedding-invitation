@@ -23,13 +23,19 @@ const BottomBar = () => {
   const [active, setActive] = React.useState("home");
 
   return (
-    // Sticky dentro del contenedor que scrollea (tu “teléfono”)
-    <div className="sticky bottom-4 z-50 px-4">
+    // sticky dentro del contenedor que scrollea (el “teléfono”)
+    <div
+      className="sticky z-50 px-4"
+      // eleva la barra por sobre la barra del navegador móvil
+      style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 16px)" }}
+    >
       <motion.div
         initial={{ y: 40, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.35, type: "spring", stiffness: 160 }}
         className="backdrop-blur-md bg-white/90 border border-gray-200/80 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.07)] px-4 py-2"
+        // acolcha por si hay notch / home indicator
+        style={{ paddingBottom: "calc(env(safe-area-inset-bottom, 0px) * 0.5)" }}
       >
         <nav className="flex justify-between items-center">
           {menuItems.map((item) => (
